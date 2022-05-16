@@ -1,0 +1,17 @@
+TEST_CASE("Clear whole list", "[list_removal]") {
+  List<int> list{};
+
+  // actual tests
+  // ------------
+  list.push_front( 9);
+  list.push_front( 1);
+  list.push_front(-7);
+  list.push_front(7);
+
+  list.clear();
+  {
+	  REQUIRE(get_first_pointer(list) == nullptr);
+	  REQUIRE(get_last_pointer(list) == nullptr);
+   }
+
+}

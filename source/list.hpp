@@ -8,7 +8,7 @@
 #include <initializer_list>
 
 template <typename T>
-class List;
+class List ;
 
 template <typename T>
 struct ListNode {
@@ -131,7 +131,7 @@ class List {
     // not fully implemented yet
     // TODO: do not forget about the initialiser list! (Aufgabe 3.2)
     /* ... */
-    List() {}
+    List() : first_{ nullptr }, last_{ nullptr }, size_{ 0 }{};
 
     // test and implement:
     //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
@@ -167,6 +167,7 @@ class List {
 
     /* ... */
     ~List() {
+        clear();
       //TODO: Implement via clear-Method (Aufgabe 3.4)
     } //can not really be tested
 
@@ -187,7 +188,11 @@ class List {
     /* ... */ 
     // test and implement:
     //TODO: clear()-Method (Aufgabe 3.4)
-
+    void clear() {
+        while (!empty()) {
+            pop_front();
+        }
+    }
 
     /* ... */
     //TODO: member function insert (Aufgabe 3.11)
@@ -202,11 +207,29 @@ class List {
 
     /* ... */
     void push_front(T const& element) {
+        ListNode<T>* a = new ListNode<T>{element,nullptr,first_};
+        if (empty()){
+            last_ = a;
+        }
+        else {
+            first_->prev = a;
+        }
+        first_ = a;
+        size_ += 1;
       // TODO: push_front-method (Aufgabe 3.3)
     }
 
     /* ... */
     void push_back(T const& element) {
+        ListNode<T>* a = new ListNode<T>{ element,last_,nullptr};
+        if (empty()) {
+            first_ = a;
+        }
+        else {
+            last_->next = a;
+        }
+        last_ = a;
+        size_ += 1;
       // TODO: push_back-method (Aufgabe 3.3)
     }
 
@@ -215,7 +238,19 @@ class List {
       if(empty()) {
         throw "List is empty";
       }
+      else {
+          auto next = first_->next;//wird das hier auto deleted ?
+          if (next != nullptr) {
+              next->prev = nullptr;
+          }
+          else {
+              last_ = nullptr;
+          }
+          delete first_;
+          first_ = next;
+          size_ -= 1;
 
+      }
       // TODO: remainder of pop_front-method (Aufgabe 3.3)
     }
 
@@ -223,6 +258,18 @@ class List {
     void pop_back() {
       if(empty()) {
         throw "List is empty";
+      }
+      else {
+          auto prev = last_->prev;//wird das hier auto deleted ?
+          if (prev != nullptr) {
+              prev->next = nullptr;
+          }
+          else {
+              first_ = nullptr;
+          }
+          delete last_;
+          last_ = prev;
+          size_ -= 1;
       }
 
       // TODO: remainder of pop_back-method (Aufgabe 3.3)
@@ -248,16 +295,15 @@ class List {
 
     /* ... */
     bool empty() const {
-
       // TODO: empty-method (Aufgabe 3.2)
-      return false;
+        return size_ == 0;
     };
 
 
     /* ... */
     std::size_t size() const{
       // TODO: size-method (Aufgabe 3.2)      
-      return 27;
+      return size_;
   };
 
 
