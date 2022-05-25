@@ -1,0 +1,13 @@
+TEST_CASE("unifying Assignment") {
+  List<int> a{};
+  List<int> b{};
+  a.push_back(1);
+  a.push_back(2);
+  a.push_back(3);
+
+  b=a;
+  REQUIRE(b.front()== 1);
+  REQUIRE(b.size() == 3);
+  REQUIRE(b.back() == 3);
+  }
+

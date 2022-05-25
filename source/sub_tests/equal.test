@@ -1,0 +1,36 @@
+TEST_CASE("Equal and Unequal operator") {
+  List<int> a{};
+  a.push_back(1);
+  a.push_back(2);
+  a.push_back(3);
+  a.push_back(4);
+  a.push_back(5);
+
+  List<int> b{};
+  b.push_back(1);
+  b.push_back(2);
+  b.push_back(3);
+  b.push_back(4);
+  b.push_back(5);
+
+  List<int> c{};
+  c.push_back(2);
+  c.push_back(2);
+  c.push_back(3);
+  c.push_back(4);
+
+  REQUIRE((c!=a));
+  REQUIRE((c!=b));
+  REQUIRE(!(c!=c));
+  
+  REQUIRE((a==b));
+  REQUIRE(!(a!=b));
+  REQUIRE((b==a));
+  REQUIRE(!(a==c));
+
+
+
+  
+ }
+
+

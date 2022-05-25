@@ -1,0 +1,19 @@
+TEST_CASE("CopyConst", "[list_removal]") {
+  List<int> list{};
+
+  // actual tests
+  // ------------
+  list.push_front( 9);
+  list.push_front( 1);
+  list.push_front(-7);
+  list.push_front(7);
+
+  List<int> list2{list};
+  {
+	  REQUIRE(list.size() == list2.size());
+	  REQUIRE(list.front() == list2.front());
+	  REQUIRE(list.back() == list2.back());
+
+   }
+
+}

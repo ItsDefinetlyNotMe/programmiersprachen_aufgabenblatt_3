@@ -27,13 +27,18 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/pop_back.test"
 
 #include "sub_tests/clear.test"
-/*
+#include "sub_tests/copyconst.test"
 //test case definitions for 
 
 //test cases for element access of list
 #include "sub_tests/front.test"
 #include "sub_tests/back.test"
 
+#include "sub_tests/unifying_Assignment.test"
+#include "sub_tests/equal.test"
+
+
+#include "sub_tests/reverse.test" //TODO
 //test cases for retrieving iterators
 #include "sub_tests/begin.test"
 #include "sub_tests/end.test"
@@ -45,9 +50,10 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/iterators/operator_does_not_equal.test"
 #include "sub_tests/iterators/operator_iterate_forward.test"
 
+#include "sub_tests/iterators/insert"
 
 #include <map>
-*/
+
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);

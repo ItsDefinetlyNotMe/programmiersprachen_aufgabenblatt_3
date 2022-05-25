@@ -1,0 +1,14 @@
+TEST_CASE("reverse Methode") {
+  List<int> list1{};
+  for(int x=0;x!=10;++x){
+	list1.push_front(x);
+  }
+  List<int> list2{};
+    for(int x=0;x<=10;++x){
+	list2.push_back(x);
+  }
+  list1.reverse();
+  //REQUIRE((list1 == list2));
+  auto list3 = reverse(list1);
+  //REQUIRE((list3==list1));
+  }
