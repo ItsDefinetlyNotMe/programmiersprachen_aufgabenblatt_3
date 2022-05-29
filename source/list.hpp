@@ -251,7 +251,26 @@ class List {
     }
     /* ... */
     //TODO: member function erase (Aufgabe 3.12)
-
+    ListIterator<T> erase(ListIterator<T>& e) {
+        auto before = e.node->prev;
+        auto after = e.node->next;
+        delete e.node;
+        e.node = nullptr;
+        if (before != nullptr) {
+            before->next = after;
+        }
+        else {
+            first_ = after;
+        }
+        if (after != nullptr) {
+            after->prev = before;
+        }
+        else {
+            last_ = before;
+        }
+        --size_;
+        return ListIterator{ after };
+    }
     /* ... */
 
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
