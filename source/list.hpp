@@ -8,7 +8,7 @@
 #include <initializer_list>
 
 template <typename T>
-class List;
+class List ;
 
 template <typename T>
 struct ListNode {
@@ -29,6 +29,7 @@ struct ListIterator {
   using difference_type   = ptrdiff_t;
   using iterator_category = std::bidirectional_iterator_tag;
 
+  ListNode <T>* node = nullptr;
 
   /* DESCRIPTION  operator*() */
   T&  operator*()  const {
@@ -57,11 +58,11 @@ struct ListIterator {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
+
+    //TODO: Implement Preincrement-Operation for Iterator
+    //      (Aufgabe 3.10 - Teil 3)
     node = node->next;
     return *this;
-    //TODO: Implement Postincrement-Operation for Iterator
-    //      (Aufgabe 3.10 - Teil 3)
-    
   }
 
   /* POSTINCREMENT (signature distinguishes the iterators), 
@@ -70,12 +71,12 @@ struct ListIterator {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
+
+    //TODO: Implement Postincrement-Operation for Iterator
+    //      (Aufgabe 3.10 - Teil 4)
     ListNode <T>* n = node;
     node = node->next;
     return ListIterator<T>{n};
-    //TODO: Implement Postincrement-Operation for Iterator
-    //      (Aufgabe 3.10 - Teil 4)
-
   }
 
 
@@ -84,9 +85,9 @@ struct ListIterator {
     //TODO: Implement Equality-Operation for Iterator
     //      (Aufgabe 3.10 - Teil 5)
     // Iterators should be the same if they refer to the same node
-    if (node == x.node) {
+      if (node == x.node) {
           return true;
-    }
+      }
     return false;
   } // call it: == it
 
@@ -95,49 +96,49 @@ struct ListIterator {
     //TODO: Implement Inequality-Operation for Iterator  
     //      (Aufgabe 3.10 - Teil 6)
     // Reuse operator==
-    return !operator==(x);
+      return !operator==(x);
   } // call it: != it
 
   /* Advances Iterator */
   ListIterator<T> next() const {
     if (nullptr != node) {
       return ListIterator{node->next};
-    } else {
+    } 
+    else {
       return ListIterator{nullptr};
     }
   }
 
 
-  ListNode <T>* node = nullptr;
 };
 
 
 
 template <typename T>
 class List {
-  public:
+public:
 
     //friend declarations for testing the members   
     template <typename TEST_TYPE>
     friend size_t get_size(List<TEST_TYPE> const& list_to_test);
     template <typename TEST_TYPE>
-    friend ListNode<TEST_TYPE>* 
-      get_first_pointer(List<TEST_TYPE> const& list_to_test);
+    friend ListNode<TEST_TYPE>*
+        get_first_pointer(List<TEST_TYPE> const& list_to_test);
     template <typename TEST_TYPE>
-    friend ListNode<TEST_TYPE>* 
-      get_last_pointer(List<TEST_TYPE> const& list_to_test);
+    friend ListNode<TEST_TYPE>*
+        get_last_pointer(List<TEST_TYPE> const& list_to_test);
 
-    using value_type      = T;
-    using pointer         = T*;
-    using const_pointer   = T const*;
-    using reference       = T&;
+    using value_type = T;
+    using pointer = T*;
+    using const_pointer = T const*;
+    using reference = T&;
     using const_reference = T const&;
-    using iterator        = ListIterator<T>;
+    using iterator = ListIterator<T>;
 
     // not fully implemented yet
     // TODO: do not forget about the initialiser list! (Aufgabe 3.2)
     /* ... */
-    List(): first_{ nullptr }, last_{ nullptr }, size_{ 0 }{};
+    List() : first_{ nullptr }, last_{ nullptr }, size_{ 0 }{};
 
     // test and implement:
     //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 3.5)
@@ -148,22 +149,28 @@ class List {
             x = x->next;
         }
     };
-
     // test and implement:
     // TODO: Move-Konstruktor (Aufgabe 3.14)
+    List(List<T>&& rhs):first_{rhs.first_}, last_{ rhs.last_ }, size_{ rhs.size_ } {
+        rhs.first_ = nullptr;
+        rhs.last_ = nullptr;
+        rhs.size_ = 0;
+    }
 
     //TODO: Initializer-List Konstruktor (3.15 - Teil 1)
     /* ... */
     // test and implement:
-    List(std::initializer_list<T> ini_list) {
-      //not implemented yet
+    List(std::initializer_list<T> ini_list):first_{ nullptr }, last_{ nullptr }, size_{ 0 } {
+        for (T element : ini_list) {
+            push_back(element);
+        }
     }
 
 
     /* ... */
     // test and implement:
     //TODO: (unifying) Assignment operator (Aufgabe 3.6)
-    List& operator=(List<T> l) {    
+    List& operator=(List<T> l) { 
         std::swap(size_,l.size_);
         std::swap(first_,l.first_);
         std::swap(last_,l.last_);
@@ -172,9 +179,9 @@ class List {
     /* ... */
     // test and implement:
 
-    bool operator==(List const& rhs) const
+    bool operator==(List<T> const& rhs) const
     {
-         if (size() != rhs.size()) {
+        if (size() != rhs.size()) {
             return false;
         }
         auto x = first_;
@@ -190,7 +197,7 @@ class List {
       //TODO: operator== (Aufgabe 3.8)
     }
 
-    bool operator!=(List const& rhs) const
+    bool operator!=(List<T> const& rhs) const
     {
         return !operator==(rhs);
       //TODO: operator!= (Aufgabe 3.8)
@@ -204,14 +211,14 @@ class List {
     } //can not really be tested
 
     /* ... */
-    ListIterator<T> begin() {
+    ListIterator<T> begin() const{
       //TODO: begin-Method returning an Iterator to the 
       //      first element in the List (Aufgabe 3.9)
       return ListIterator<T>{first_};
     }
 
     /* ... */
-    ListIterator<T> end() {
+    ListIterator<T> end() const{
       //TODO: end-Method returning an Iterator to element after (!) 
       //      the last element in the List (Aufgabe 3.9)
       return {nullptr};
@@ -226,7 +233,7 @@ class List {
         }
     }
 
-    /* ... */
+    /* ... *///////////////LEEEERE LISTE
     //TODO: member function insert (Aufgabe 3.11)
     ListIterator<T> insert(ListIterator<T> after,auto element) {
         ListNode<T>* a = new ListNode<T>{ element,nullptr,nullptr };
@@ -284,7 +291,6 @@ class List {
         std::swap(first_, last_);
     }
 
-
     /* ... */
     void push_front(T const& element) {
         ListNode<T>* a = new ListNode<T>{element,nullptr,first_};
@@ -329,8 +335,8 @@ class List {
           delete first_;
           first_ = next;
           size_ -= 1;
-      }
 
+      }
       // TODO: remainder of pop_front-method (Aufgabe 3.3)
     }
 
@@ -351,38 +357,39 @@ class List {
           last_ = prev;
           size_ -= 1;
       }
+
       // TODO: remainder of pop_back-method (Aufgabe 3.3)
     }
 
     /* ... */
-    T& front() {
+    T& front() const{
       if(empty()) {
         throw "List is empty";
       }
-        return first_->value;
+      return first_->value;
       // TODO: remainder of front-method (Aufgabe 3.3)
     }
 
     /* ... */
-    T& back() {
+    T& back() const{
       if(empty()) {
         throw "List is empty";
       }
-        return last_->value;
+      return last_->value;
       // TODO: remainder of back-method (Aufgabe 3.3)
     }
 
     /* ... */
     bool empty() const {
       // TODO: empty-method (Aufgabe 3.2)
-      return size_ == 0;
+        return size_ == 0;
     };
 
 
     /* ... */
     std::size_t size() const{
       // TODO: size-method (Aufgabe 3.2)      
-     return size_;
+      return size_;
   };
 
 
@@ -402,10 +409,17 @@ List<T> reverse(List<T> const& l) {
     liste.reverse();
     return liste;
 }
-
-
 /* ... */
 //TODO: Freie Funktion operator+ (3.15 - Teil 2)
 
+template <typename T>
+List<T> operator+(List<T> const& lhs, List<T> const& rhs) {
+    List lhs_copy{ lhs };
+   
+    for (ListIterator<T>c { rhs.begin() }; c != rhs.end(); ++c) {
+        lhs_copy.push_back(c.node->value);
+    }
+    return lhs_copy;
+}
 
 #endif // # define BUW_LIST_HPP
