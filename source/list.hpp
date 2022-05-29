@@ -168,11 +168,25 @@ class List {
 
     bool operator==(List const& rhs) const
     {
+         if (size() != rhs.size()) {
+            return false;
+        }
+        auto x = first_;
+        auto y = rhs.first_;
+        while (x!= nullptr) {
+            if (x->value != y->value) {
+                return false;
+            }
+            x = x->next;
+            y = y->next;
+        }
+        return true;
       //TODO: operator== (Aufgabe 3.8)
     }
 
     bool operator!=(List const& rhs) const
     {
+        return !operator==(rhs);
       //TODO: operator!= (Aufgabe 3.8)
       // make use of operator==
     }
