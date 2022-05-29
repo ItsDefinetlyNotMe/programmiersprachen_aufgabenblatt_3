@@ -28,8 +28,13 @@ TEST_CASE("Equal and Unequal operator") {
   REQUIRE((b==a));
   REQUIRE(!(a==c));
 
-
-
+  List<char> d{};
+  REQUIRE(d == List<char>{});
+  d = List<char>{'a','b','c'};
+  REQUIRE(d != List<char>{});
+  List<char> e{'a','b','c'};
+  REQUIRE(e==d);
+  
   
  }
 

@@ -1,0 +1,21 @@
+#include "list.hpp"
+TEST_CASE("insert Methode") {
+  List<int> list1{};
+  for(int x=0;x!=10;++x){
+	list1.push_front(x);
+  }
+	auto iterator = ListIterator<int>{list1.begin()};
+	iterator = list1.insert(ListIterator<int>{list1.begin()},-1);
+	REQUIRE(list1.size() == 11);
+	REQUIRE(list1.front() == -1);
+
+	iterator = list1.insert(++iterator,143);
+	REQUIRE(list1.size() == 12);
+	REQUIRE(list1.front() == -1);
+	
+	REQUIRE(iterator.node->value == 143);
+	auto first = ListIterator<int>{list1.begin()}; 
+	iterator = list1.erase( first );
+	REQUIRE(list1.size() == 11);
+	REQUIRE(ListIterator<int>{list1.begin()}.node->value == 143);
+	}

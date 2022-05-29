@@ -1,4 +1,4 @@
-TEST_CASE("CopyConst", "[list_removal]") {
+TEST_CASE("CopyConst", "[Copy]") {
   List<int> list{};
 
   // actual tests
@@ -15,5 +15,6 @@ TEST_CASE("CopyConst", "[list_removal]") {
 	  REQUIRE(list.back() == list2.back());
 
    }
+   List<int> liste3{};
 
 }

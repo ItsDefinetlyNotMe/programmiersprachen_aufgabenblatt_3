@@ -1,0 +1,22 @@
+TEST_CASE ("move constructor" , "[constructor]" )
+{
+	List<int>list;
+	list.push_front (1);
+	list.push_front (2);
+	list.push_front (3);
+	list.push_front (4);
+	List<int> list2 = std::move(list);
+	REQUIRE (0 == list.size());
+	REQUIRE (list.empty());
+	REQUIRE (4 == list2.size());
+	List<int> var{List<int>{1,2} + List<int>{5,6}};
+	REQUIRE(var == List <int>{1,2,5,6});
+
+	List<int>list21;
+	List<int> list22 = std::move(list);
+	REQUIRE (0 == list21.size());
+	REQUIRE (list21.empty());
+	REQUIRE (0 == list22.size());
+	List<int> var2{List<int>{} + List<int>{5,6}};
+	REQUIRE(var2 == List <int>{5,6});
+}
