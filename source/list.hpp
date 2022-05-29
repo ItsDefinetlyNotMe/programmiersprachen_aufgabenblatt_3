@@ -215,6 +215,15 @@ class List {
     /* ... */
 
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
+    void reverse() {
+        if (size_ == 0) {
+            return;
+        }
+        for (auto x = first_;x != nullptr ; x = x->prev) {
+            std::swap(x->next, x->prev);
+        }
+        std::swap(first_, last_);
+    }
 
 
     /* ... */
@@ -328,6 +337,13 @@ class List {
 /* ... */
 //TODO: Freie Funktion reverse 
 //(Aufgabe 3.7 - Teil 2, benutzt Member-Funktion reverse)
+template <typename T>
+List<T> reverse(List<T> const& l) {
+    List<T> liste{l};
+    liste.reverse();
+    return liste;
+}
+
 
 /* ... */
 //TODO: Freie Funktion operator+ (3.15 - Teil 2)
