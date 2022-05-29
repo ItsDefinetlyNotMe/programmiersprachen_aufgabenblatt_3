@@ -202,11 +202,29 @@ class List {
 
     /* ... */
     void push_front(T const& element) {
+        ListNode<T>* a = new ListNode<T>{element,nullptr,first_};
+        if (empty()){
+            last_ = a;
+        }
+        else {
+            first_->prev = a;
+        }
+        first_ = a;
+        size_ += 1;
       // TODO: push_front-method (Aufgabe 3.3)
     }
 
     /* ... */
     void push_back(T const& element) {
+        ListNode<T>* a = new ListNode<T>{ element,last_,nullptr };
+        if (empty()) {
+            first_ = a;
+        }
+        else {
+            last_->next = a;
+        }
+        last_ = a;
+        size_ += 1;
       // TODO: push_back-method (Aufgabe 3.3)
     }
 
@@ -214,6 +232,18 @@ class List {
     void pop_front() {
       if(empty()) {
         throw "List is empty";
+      }
+      else {
+          auto next = first_->next;
+          if (next != nullptr) {
+              next->prev = nullptr;
+          }
+          else {
+              last_ = nullptr;
+          }
+          delete first_;
+          first_ = next;
+          size_ -= 1;
       }
 
       // TODO: remainder of pop_front-method (Aufgabe 3.3)
@@ -224,7 +254,18 @@ class List {
       if(empty()) {
         throw "List is empty";
       }
-
+      else {
+          auto prev = last_->prev;//wird das hier auto deleted ?
+          if (prev != nullptr) {
+              prev->next = nullptr;
+          }
+          else {
+              first_ = nullptr;
+          }
+          delete last_;
+          last_ = prev;
+          size_ -= 1;
+      }
       // TODO: remainder of pop_back-method (Aufgabe 3.3)
     }
 
@@ -233,7 +274,7 @@ class List {
       if(empty()) {
         throw "List is empty";
       }
-
+        return first_->value;
       // TODO: remainder of front-method (Aufgabe 3.3)
     }
 
@@ -242,7 +283,7 @@ class List {
       if(empty()) {
         throw "List is empty";
       }
-
+        return last_->value;
       // TODO: remainder of back-method (Aufgabe 3.3)
     }
 
