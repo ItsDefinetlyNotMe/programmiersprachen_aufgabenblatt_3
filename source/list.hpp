@@ -228,7 +228,27 @@ class List {
 
     /* ... */
     //TODO: member function insert (Aufgabe 3.11)
+    ListIterator<T> insert(ListIterator<T> after,auto element) {
+        ListNode<T>* a = new ListNode<T>{ element,nullptr,nullptr };
+        a->next = after.node;
+        a->prev = after.node->prev;
+        if (a->prev != nullptr) {
+            a->prev->next = a;
+        }
+        else{
+            first_ = a;
+        }
+        after.node->prev = a;
+        ++size_;
+        std::string r = "";
+        for (auto x = begin(); x != end(); ++x) {
+             r += std::to_string(x.node->value);
+             r += ',';
+        }
 
+        return ListIterator<T>{ a };
+
+    }
     /* ... */
     //TODO: member function erase (Aufgabe 3.12)
 
