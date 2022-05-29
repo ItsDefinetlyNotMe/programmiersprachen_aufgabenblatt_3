@@ -15,4 +15,12 @@ TEST_CASE("Clear whole list", "[list_removal]") {
 	  REQUIRE(list.size() == 0);
    }
 
+   List<int> list1{};
+   list1.clear();
+   {
+	  REQUIRE(get_first_pointer(list) == nullptr);
+	  REQUIRE(get_last_pointer(list) == nullptr);
+	  REQUIRE(list.size() == 0);
+   }
+
 }

@@ -15,6 +15,9 @@ TEST_CASE("CopyConst", "[Copy]") {
 	  REQUIRE(list.back() == list2.back());
 
    }
-   List<int> liste3{};
-
+   list.clear();
+   List<int> list3{list};
+  {
+	  REQUIRE(list3.size() == 0);
+   }
 }
