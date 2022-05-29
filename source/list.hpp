@@ -157,7 +157,12 @@ class List {
     /* ... */
     // test and implement:
     //TODO: (unifying) Assignment operator (Aufgabe 3.6)
-
+    List& operator=(List<T> l) {    
+        std::swap(size_,l.size_);
+        std::swap(first_,l.first_);
+        std::swap(last_,l.last_);
+        return *this;
+    };
     /* ... */
     // test and implement:
 
