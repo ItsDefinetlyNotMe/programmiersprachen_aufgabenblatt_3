@@ -201,14 +201,14 @@ class List {
     ListIterator<T> begin() {
       //TODO: begin-Method returning an Iterator to the 
       //      first element in the List (Aufgabe 3.9)
-      return {};
+      return ListIterator<T>{first_};
     }
 
     /* ... */
     ListIterator<T> end() {
       //TODO: end-Method returning an Iterator to element after (!) 
       //      the last element in the List (Aufgabe 3.9)
-      return {};
+      return {nullptr};
     }
 
     /* ... */ 
