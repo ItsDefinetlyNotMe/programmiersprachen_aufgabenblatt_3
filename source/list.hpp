@@ -35,7 +35,7 @@ struct ListIterator {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
+    return node->value;
     //TODO: remaining implementation of derefenciation of 
     //      iterator using operator* (Aufgabe 3.10 - Teil 1)
 
@@ -46,7 +46,7 @@ struct ListIterator {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
+    return &(node->value);
     //TODO: remaining implementation of derefenciation of 
     //      iterator using operator-> (Aufgabe 3.10 - Teil 2)
   }  //call it->method() or it->member
@@ -57,7 +57,8 @@ struct ListIterator {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
+    node = node->next;
+    return *this;
     //TODO: Implement Postincrement-Operation for Iterator
     //      (Aufgabe 3.10 - Teil 3)
     
@@ -69,7 +70,9 @@ struct ListIterator {
     if(nullptr == node) {
       throw "Iterator does not point to valid node";
     }
-
+    ListNode <T>* n = node;
+    node = node->next;
+    return ListIterator<T>{n};
     //TODO: Implement Postincrement-Operation for Iterator
     //      (Aufgabe 3.10 - Teil 4)
 
@@ -81,6 +84,9 @@ struct ListIterator {
     //TODO: Implement Equality-Operation for Iterator
     //      (Aufgabe 3.10 - Teil 5)
     // Iterators should be the same if they refer to the same node
+    if (node == x.node) {
+          return true;
+    }
     return false;
   } // call it: == it
 
@@ -89,7 +95,7 @@ struct ListIterator {
     //TODO: Implement Inequality-Operation for Iterator  
     //      (Aufgabe 3.10 - Teil 6)
     // Reuse operator==
-    return false;
+    return !operator==(x);
   } // call it: != it
 
   /* Advances Iterator */
